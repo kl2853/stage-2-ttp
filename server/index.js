@@ -49,6 +49,7 @@ const createApp = () => {
     app.use(passport.session());
 
     // routes
+    app.use("/api", require("./api"));
     app.use("/auth", require("./auth"));
 
     // static file-serving middleware
