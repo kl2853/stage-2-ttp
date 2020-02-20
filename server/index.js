@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const db = require("./db");
+const compression = require("compression");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const sessionStore = new SequelizeStore({ db });
@@ -29,6 +30,9 @@ const createApp = () => {
     // body parsing middleware
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+
+    // compression middleware
+    app.use(compression());
 
     // sessions middleware
     app.use(
