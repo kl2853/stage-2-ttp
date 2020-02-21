@@ -28,9 +28,9 @@ const User = db.define("user", {
 })
 
 // class methods
-User.encryptPassword = async function(plainText) {
+User.encryptPassword = function(plainText) {
     try {
-        let encrypted = await bcrypt.hash(plainText, saltRounds);
+        let encrypted = bcrypt.hashSync(plainText, saltRounds);
         return encrypted;
     } catch (err) {
         console.error(err);
@@ -38,9 +38,9 @@ User.encryptPassword = async function(plainText) {
 }
 
 // instance methods
-User.prototype.validPassword = async function(candidatePwd) {
+User.prototype.validPassword = function(candidatePwd) {
     try {
-        let validity = await bcrypt.compare(candidatePwd, this.password);
+        let validity = bcrypt.compareSync(candidatePwd, this.password());
         return validity;
     } catch (err) {
         console.error(err);
@@ -48,9 +48,9 @@ User.prototype.validPassword = async function(candidatePwd) {
 }
 
 // hooks for encryption
-const setPassword = async user => {
+const setPassword = user => {
     if(user.changed("password")) {
-        user.password = await User.encryptPassword(user.password);
+        user.password = User.encryptPassword(user.password());
     }
 }
 
