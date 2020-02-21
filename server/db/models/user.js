@@ -16,26 +16,37 @@ const User = db.define("user", {
     },
     password: {
         type: Sequelize.STRING,
-        get () {
-            return () => this.getDataValue("password");
+        get() {
+            return () => this.getDataValue("password")
         }
     }
 })
 
 // class method
-User.encryptPassword = function(plainText) {
-    return bcrypt.hash(plainText, saltRounds);
+User.encryptPassword = async function(plainText) {
+    try {
+        let encrypted = await bcrypt.hash(plainText, saltRounds);
+        return encrypted;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
+
 // instance method
-User.prototype.validPassword = function(candidatePwd) {
-    return bcrypt.compare(candidatePwd, this.password());
+User.prototype.validPassword = async function(candidatePwd) {
+    try {
+        let validity = await bcrypt.compare(candidatePwd, this.password);
+        return validity;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 // hooks for encryption
-const setPassword = user => {
+const setPassword = async user => {
     if(user.changed("password")) {
-        user.password = User.encryptPassword(user.password());
+        user.password = await User.encryptPassword(user.password);
     }
 }
 

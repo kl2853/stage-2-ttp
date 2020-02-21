@@ -17,6 +17,12 @@ router.post("/login", async(req, res, next) => {
         } else if(!user.validPassword(req.body.password)) {
             console.log("Incorrect password for user: ", req.body.email);
             res.status(401).send("The email or password is incorrect");
+        } else {
+            req.login(user, err => (err 
+                ? next(err) 
+                : res.json(user)
+                ));
+
         }
     } catch (err) {
         next(err);
@@ -33,6 +39,8 @@ router.post("/signup", async(req, res, next) => {
     } catch (err) {
         if(err.name === "SequelizeUniqueConstraintError") {
             res.status(401).send("This email is already in use");
+        } else {
+            next(err);
         }
     }
 })

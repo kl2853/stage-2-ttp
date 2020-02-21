@@ -4,6 +4,7 @@ import Routes from "./routes";
 const App = () => {
     return(
         <div>
+            <h3>Stock Portfolio</h3>
             <Routes />
         </div>
     )
