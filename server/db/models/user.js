@@ -19,6 +19,11 @@ const User = db.define("user", {
         get() {
             return () => this.getDataValue("password")
         }
+    },
+    accountbalance: {
+        type: Sequelize.INTEGER,
+        defaultValue: 500000,
+        allowNull: false
     }
 })
 
