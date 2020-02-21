@@ -27,7 +27,7 @@ const User = db.define("user", {
     }
 })
 
-// class method
+// class methods
 User.encryptPassword = async function(plainText) {
     try {
         let encrypted = await bcrypt.hash(plainText, saltRounds);
@@ -37,8 +37,7 @@ User.encryptPassword = async function(plainText) {
     }
 }
 
-
-// instance method
+// instance methods
 User.prototype.validPassword = async function(candidatePwd) {
     try {
         let validity = await bcrypt.compare(candidatePwd, this.password);
