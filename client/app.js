@@ -1,11 +1,13 @@
 import React from "react";
 import Routes from "./routes";
+import { NavBar, SearchBar } from "./components";
 
 const App = () => {
     return(
         <div>
-            <h3>Stock Portfolio</h3>
+            <NavBar />
             <Routes />
+            <SearchBar />
         </div>
     )
 }
