@@ -15,21 +15,17 @@ const testing = async function(ticker) {
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            input: ''
-        }
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange() {
-
+    handleChange(evt) {
+        if (!!evt.target.value.length) testing(evt.target.value);
     }
 
     render() {
-        console.log(testing("AAPL"));
         return (
             <div>
-                <input placeholder="Search by ticker symbol"/>
+                <input name="ticker" onChange={this.handleChange} placeholder="Search by ticker symbol"/>
             </div>
         )
     }
