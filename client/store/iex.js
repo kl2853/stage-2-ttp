@@ -23,9 +23,11 @@ export const getPriceThunk = (ticker) => async dispatch => {
 // initial state
 const defaultPrice = 0;
 
-//reducer
+// reducer
 export default function(state = defaultPrice, action) {
     switch(action.type) {
+        case GET_PRICE:
+            return action.price
         default:
             return state
     }
