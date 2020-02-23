@@ -10,7 +10,6 @@ router.post("/login", async(req, res, next) => {
                 email: req.body.email
             }
         });
-
         if(!user) {
             console.log("No user found for email: ", req.body.email);
             res.status(401).send("This email is not associated with an account");

@@ -12,8 +12,8 @@ router.get("/", async(req, res, next) => {
 
 router.post("/:ticker", async(req, res, next) => {
     try {
-        const holding = await Holding.create(req.body);
-        res.json(holding);
+        const stock = await Holding.create(req.body);
+        res.json(stock);
     } catch (err) {
         if(err.name === "SequelizeUniqueConstraintError") {
             res.status(401).send("Ticker already exists");
