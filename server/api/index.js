@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 module.exports = router;
 
-router.use("/stocks", require("./stocks"));
+router.use("/holdings", require("./holdings"));
 router.use("/transactions", require("./transactions"));
 
 router.use((req, res, next) => {

@@ -1,11 +1,10 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Stock = db.define("stock", {
+const Holding = db.define("holding", {
     ticker: {
         type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
+        primaryKey: true
     },
     companyName: {
         type: Sequelize.STRING,
@@ -14,4 +13,4 @@ const Stock = db.define("stock", {
     }
 })
 
-module.exports = Stock;
+module.exports = Holding;

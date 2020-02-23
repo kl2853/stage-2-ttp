@@ -1,12 +1,21 @@
 const User = require("./user");
-const Stock = require("./stock");
+const Holding = require("./holding");
 const Transaction = require("./transaction");
+const Portfolio = require("./portfolio");
 
-// associations
-Stock.belongsToMany(User, { through: Transaction });
+// one to many association
+User.hasMany(Transaction);
+Transaction.belongsTo(User);
+
+// many to many symmetric association
+// provides magic methods to both instances
+Holding.belongsToMany(User, { through: Portfolio });
+User.belongsToMany(Holding, { through: Portfolio });
+
 
 module.exports = {
     User,
-    Stock,
-    Transaction
+    Holding,
+    Transaction,
+    Portfolio
 }
