@@ -7,7 +7,7 @@ router.get("/:userId", async(req, res, next) => {
     try {
         const allTransactions = await Transaction.findAll({
             where: {
-                id: req.params.userId
+                userId: req.params.userId
             }
         });
         res.json(allTransactions);
@@ -20,7 +20,7 @@ router.post("/:userId", async(req, res, next) => {
     try {
         const newTransaction = await Transaction.create(req.body, {
             where: {
-                id: req.params.userId
+                userId: req.params.userId
             }
         });
         res.json(newTransaction);
