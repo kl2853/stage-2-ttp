@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Holding = require("../db/models/holding");
 
+module.exports = router;
+
 router.get("/", async(req, res, next) => {
     try {
         const allStocks = await Holding.findAll();
@@ -22,5 +24,3 @@ router.post("/:ticker", async(req, res, next) => {
         }
     }
 })
-
-module.exports = router;

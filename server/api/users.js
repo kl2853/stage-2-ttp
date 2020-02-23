@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const User = require("../db/models/user");
 
+module.exports = router;
+
 router.get("/", async(req, res, next) => {
     try {
         const allUsers = User.findAll();
@@ -29,5 +31,3 @@ router.put("/:id/buy", async(req, res, next) => {
         next(err);
     }
 })
-
-module.exports = router;

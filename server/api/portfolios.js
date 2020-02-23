@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Portfolio = require("../db/models/portfolio");
 
+module.exports = router;
+
 router.get("/:userId", async(req, res, next) => {
     try {
         const wholePortfolio = Portfolio.findAll({
@@ -29,5 +31,3 @@ router.put("/:userId/:ticker/buy", async(req, res, next) => {
         next(err);
     }
 })
-
-module.exports = router;

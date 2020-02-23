@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Transaction = require("../db/models/transaction");
 
+module.exports = router;
+
 router.get("/:userId", async(req, res, next) => {
     try {
         const allTransactions = await Transaction.findAll({
@@ -26,5 +28,3 @@ router.post("/:userId", async(req, res, next) => {
         next(err);
     }
 })
-
-module.exports = router;
