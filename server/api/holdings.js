@@ -3,29 +3,31 @@ const Holding = require("../db/models/holding");
 
 module.exports = router;
 
-router.get("/", async(req, res, next) => {
+router.get("/:userId", async(req, res, next) => {
     try {
-        const allHoldings = await Holding.findAll();
+        const allHoldings = await Holding.findAll({
+            where: {
+                userId: req.params.userId
+            }
+        });
         res.json(allHoldings);
     } catch (err) {
         next(err);
     }
 })
 
-router.post("/:ticker", async(req, res, next) => {
+router.put("/:userId/:ticker/buy", async(req, res, next) => {
     try {
         const [holding, created] = await Holding.findOrCreate({
             where: {
                 ticker: req.params.ticker,
-                companyName: req.body.companyName
+                userId: req.params.userId
             }
         });
+        let prevQty = holding.quantity;
+        await holding.update({ quantity: prevQty + Number(req.body.quantity) });
         res.json(holding);
     } catch (err) {
-        if(err.name === "SequelizeUniqueConstraintError") {
-            res.status(401).send("Ticker already exists");
-        } else {
-            next(err);
-        }
+        next(err);
     }
 })

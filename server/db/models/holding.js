@@ -4,11 +4,11 @@ const db = require("../db");
 const Holding = db.define("holding", {
     ticker: {
         type: Sequelize.STRING,
-        primaryKey: true
+        allowNull: false
     },
-    companyName: {
-        type: Sequelize.STRING,
-        unique: true,
+    quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
         allowNull: false
     }
 })
