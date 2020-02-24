@@ -5,8 +5,8 @@ module.exports = router;
 
 router.get("/", async(req, res, next) => {
     try {
-        const allStocks = await Holding.findAll();
-        res.json(allStocks);
+        const allHoldings = await Holding.findAll();
+        res.json(allHoldings);
     } catch (err) {
         next(err);
     }
@@ -14,8 +14,13 @@ router.get("/", async(req, res, next) => {
 
 router.post("/:ticker", async(req, res, next) => {
     try {
-        const stock = await Holding.create(req.body);
-        res.json(stock);
+        const [holding, created] = await Holding.findOrCreate({
+            where: {
+                ticker: req.params.ticker,
+                companyName: req.body.companyName
+            }
+        });
+        res.json(holding);
     } catch (err) {
         if(err.name === "SequelizeUniqueConstraintError") {
             res.status(401).send("Ticker already exists");

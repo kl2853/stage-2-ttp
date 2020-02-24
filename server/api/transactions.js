@@ -18,12 +18,9 @@ router.get("/:userId", async(req, res, next) => {
 
 router.post("/:userId", async(req, res, next) => {
     try {
-        const newTransaction = await Transaction.create(req.body, {
-            where: {
-                userId: req.params.userId
-            }
-        });
-        res.json(newTransaction);
+        const transaction = await Transaction.create(req.body);
+        await transaction.update({ userId: req.params.userId });
+        res.json(transaction);
     } catch (err) {
         next(err);
     }

@@ -5,7 +5,7 @@ module.exports = router;
 
 router.get("/:userId", async(req, res, next) => {
     try {
-        const wholePortfolio = Portfolio.findAll({
+        const wholePortfolio = await Portfolio.findAll({
             where: {
                 userId: req.params.userId
             }
@@ -18,14 +18,14 @@ router.get("/:userId", async(req, res, next) => {
 
 router.put("/:userId/:ticker/buy", async(req, res, next) => {
     try {
-        const singleHolding = Portfolio.findOne({
+        const holding = await Portfolio.findOrCreate({
             where: {
                 userId: req.params.userId,
                 holdingTicker: req.params.ticker
             }
         });
-        singleHolding.quantity += req.body.quantity;
-        await singleHolding.save();
+        let prevQty = holding.quantity;
+        await holding.update({ quantity: prevQty + req.body.quantity });
         res.json(singleHolding);
     } catch (err) {
         next(err);
