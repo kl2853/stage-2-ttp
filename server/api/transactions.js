@@ -8,7 +8,10 @@ router.get("/:userId", async(req, res, next) => {
         const allTransactions = await Transaction.findAll({
             where: {
                 userId: req.params.userId
-            }
+            },
+            order: [
+                ['updatedAt', 'DESC']
+            ]
         });
         res.json(allTransactions);
     } catch (err) {
