@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Holding = require("../db/models/holding");
+const { Holding } = require("../db/models");
 
 module.exports = router;
 
