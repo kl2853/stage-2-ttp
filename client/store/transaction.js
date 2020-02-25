@@ -1,19 +1,22 @@
 import axios from "axios";
-import { Portfolio } from "../components";
 
 // action types
-const BUY_SHARES = "BUY_SHARES";
+const MAKE_PURCHASE = "MAKE_PURCHASE";
 const GET_TRANSACTION_HISTORY = "GET_TRANSACTION_HISTORY";
+const INSUFFICIENT_FUNDS = "INSUFFICIENT_FUNDS";
+const CLEAR_WARNING = "CLEAR_WARNING";
 
 // action creators
-const buyShares = shares => ({ type: BUY_SHARES, shares });
+const makePurchase = purchase => ({ type: MAKE_PURCHASE, purchase });
 const getTransactionHistory = history => ({ type: GET_TRANSACTION_HISTORY, history });
+export const insufficientFunds = () => ({ type: INSUFFICIENT_FUNDS });
+export const clearWarning = () => ({ type: CLEAR_WARNING });
 
 // thunk creators
-export const buySharesThunk = (id, ticker, historicPrice, quantity, action) => async dispatch => {
+export const makePurchaseThunk = (id, ticker, historicPrice, quantity, action) => async dispatch => {
     try {
         const { data } = await axios.post(`/api/transactions/${id}`, { ticker, historicPrice, quantity, action });
-        console.log(data);
+        dispatch(makePurchase(data));
     } catch (err) {
         console.error(err);
     }
@@ -31,16 +34,23 @@ export const getTransactionHistoryThunk = (id) => async dispatch => {
 // initial state
 const defaultTransaction = {
     history: [],
-    shares: {}
+    lastPurchase: {},
+    error: {}
 };
 
 // reducer
 export default function(state = defaultTransaction, action) {
     switch(action.type) {
-        case BUY_SHARES:
-            return {...state, shares: action.shares}
+        case MAKE_PURCHASE:
+            return {...state, lastPurchase: action.purchase};
         case GET_TRANSACTION_HISTORY:
             return {...state, history: action.history}
+        case INSUFFICIENT_FUNDS:
+            const err = {};
+            err["response"] = "Insufficient funds";
+            return {...state, error: err};
+        case CLEAR_WARNING:
+            return {...state, error: {}};
         default:
             return state
     }

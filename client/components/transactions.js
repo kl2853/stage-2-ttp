@@ -13,14 +13,12 @@ class Transactions extends React.Component {
     }
 
     render() {
+
         return(
             <div>
                 {(!!this.props.transactionHistory && this.props.transactionHistory.length)
                     ? this.props.transactionHistory.map(transaction => 
-                    <div key={transaction.id}>
-                        <Transaction transaction={transaction} />
-                    </div>
-                    )
+                        <Transaction key={transaction.id} transaction={transaction} />)
                     : `No transactions to display.`}
             </div>
         )
