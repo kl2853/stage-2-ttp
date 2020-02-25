@@ -5,7 +5,7 @@ const Transaction = props => {
 
     return(
         <div>
-            {action} {ticker}, {quantity} @ {historicPrice}
+            {action} {ticker}, {quantity} @ ${+historicPrice/100}
             <br />
             <small>{companyName}</small>
             <hr />

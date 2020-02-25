@@ -12,31 +12,34 @@ const addHolding = holding => ({ type: ADD_HOLDING, holding });
 export const getHoldingsThunk = (id) => async dispatch => {
     try {
         const { data } = await axios.get(`/api/holdings/${id}`);
-        dispatch(getHoldings({ holdings: data }));
+        dispatch(getHoldings(data));
     } catch (err) {
         console.error(err);
     }
 }
 
-export const addHoldingThunk = (holding, id) => async dispatch => {
+export const addHoldingThunk = (id, ticker, qty) => async dispatch => {
     try {
-        const res = await axios.post(/* add holding to user's portfolio */);
-        console.log(res);
+        const { data } = await axios.put(`/api/holdings/${id}/${ticker}/buy`, qty);
+        dispatch(addHolding(data));
     } catch (err) {
         console.error(err);
     }
 }
 
 // initial state
-const stockHoldings = [];
+const stockHoldings = {
+    holdings: []
+};
 
 // reducer
 export default function(state = stockHoldings, action) {
     switch(action.type) {
         case GET_HOLDINGS:
-            return action.holdings;
+            return {...state, holdings: action.holdings}
         case ADD_HOLDING:
-            return action.holding;
+            const added = state.holdings.filter(holding => holding.ticker !== action.ticker);
+            return {...state, holdings: added};
         default:
             return state
     }

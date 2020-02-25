@@ -7,10 +7,16 @@ const baseUrl = "https://sandbox.iexapis.com/stable";
 // action types
 const GET_PRICE = "GET_PRICE";
 const GET_BATCH_PRICES = "GET_BATCH_PRICES";
+const GET_ERROR = "GET_ERROR";
+const CLEAR_PRICE = "CLEAR_PRICE";
+const CLEAR_ERROR = "CLEAR_ERROR";
 
 // action creators
 const getPrice = price => ({ type: GET_PRICE, price });
 const getBatchPrices = prices => ({ type: GET_BATCH_PRICES, prices });
+const getError = error => ({ type: GET_ERROR, error });
+export const clearPrice = () => ({ type: CLEAR_PRICE });
+export const clearError = () => ({ type: CLEAR_ERROR });
 
 // thunk creators
 export const getPriceThunk = (ticker) => async dispatch => {
@@ -18,11 +24,11 @@ export const getPriceThunk = (ticker) => async dispatch => {
     try {
         res = await axios.get(`${baseUrl}/stock/${ticker}/quote?token=${IEX_PUBLIC_KEY}`);
     } catch (fetchErr) {
-        return dispatch(getPrice({ error: fetchErr }));
+        return dispatch(getError(fetchErr));
     }
 
     try {
-        dispatch(getPrice({ price: res.data.latestPrice }));
+        dispatch(getPrice(res.data.latestPrice));
     } catch (err) {
         console.error(err);
     }
@@ -33,26 +39,36 @@ export const getBatchPricesThunk = (tickers) => async dispatch => {
     try {
         res = await axios.get(`${baseUrl}/stock/market/batch?symbols=${tickers}&types=quote&token=${IEX_PUBLIC_KEY}`);
     } catch (fetchErr) {
-        return dispatch(getPrice({ error: fetchErr }));
+        return dispatch(getError(fetchErr));
     }
 
     try {
-        dispatch(getBatchPrices({ prices: res.data }));
+        dispatch(getBatchPrices(res.data));
     } catch (err) {
         console.error(err);
     }
 }
 
 // initial state
-const defaultIex = {}
+const defaultIex = {
+    price: 0,
+    prices: {},
+    error: {}
+}
 
 // reducer
 export default function(state = defaultIex, action) {
     switch(action.type) {
         case GET_PRICE:
-            return action.price
+            return {...state, price: action.price}
         case GET_BATCH_PRICES:
-            return action.prices
+            return {...state, prices: action.prices}
+        case GET_ERROR:
+            return {...state, error: action.error}
+        case CLEAR_PRICE:
+            return {...state, price: 0}
+        case CLEAR_ERROR:
+            return {...state, error: {}}
         default:
             return state
     }
