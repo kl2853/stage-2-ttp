@@ -1,13 +1,12 @@
 import React from "react";
 import Routes from "./routes";
-import { NavBar, SearchBar } from "./components";
+import { NavBar } from "./components";
 
 const App = () => {
     return(
         <div>
             <NavBar />
             <Routes />
-            <SearchBar />
         </div>
     )
 }

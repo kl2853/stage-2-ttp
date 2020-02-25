@@ -1,34 +1,42 @@
 import React from "react";
-import axios from "axios";
-import { IEX_PUBLIC_KEY } from "../../keys";
+import { connect } from "react-redux";
+import { getPriceThunk } from "../store";
 
-const testing = async function(ticker) {
-    try {
-        const baseUrl = "https://sandbox.iexapis.com/stable"
-        const { data } = await axios.get(`${baseUrl}/stock/${ticker}/quote?token=${IEX_PUBLIC_KEY}`);
-        console.log(data.companyName, data.latestPrice);
-    } catch (err) {
-        console.error(err);
-    }
-}
+const SearchBar = props => {
+    const { latestPrice, handleChange, error } = props;
 
-class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(evt) {
-        if (!!evt.target.value.length) testing(evt.target.value);
-    }
-
-    render() {
-        return (
+    return(
+        <div>
+            <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
             <div>
-                <input name="ticker" onChange={this.handleChange} placeholder="Search by ticker symbol"/>
+                {(!!latestPrice) && <div> 
+                    <div>
+                        Current price: {latestPrice}
+                    </div>
+                    <div>
+                        <button type="button">Buy</button>
+                    </div>
+                    </div>}
+                {error && error.response && <div> {error.response.data} </div>}
             </div>
-        )
+        </div>
+    )
+}
+
+const mapState = state => {
+    return {
+        latestPrice: state.iexState.price,
+        error: state.iexState.error
     }
 }
 
-export default SearchBar;
+const mapDispatch = dispatch => {
+    return {
+        handleChange(evt) {
+            let ticker = evt.target.value;
+            if(!!ticker.length) dispatch(getPriceThunk(ticker));
+        }
+    }
+}
+
+export default connect(mapState, mapDispatch)(SearchBar);

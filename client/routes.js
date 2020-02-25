@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { me } from "./store";
-import { Login, Signup, Portfolio } from "./components";
+import { Login, Signup, Portfolio, SearchBar, Transactions } from "./components";
 
 class Routes extends React.Component {
     componentDidMount() {
@@ -18,8 +18,12 @@ class Routes extends React.Component {
                 <Route path="/signup" component={Signup} />
                 {isLoggedIn && (
                     <Switch>
-                        <Route path="/myportfolio" component={Portfolio} />
-                        <Route path="/mytransactions" />
+                        <Route path="/myportfolio" render={props => 
+                            <div>
+                                <Portfolio />
+                                <SearchBar />
+                            </div>} />
+                        <Route path="/mytransactions" component={Transactions} />
                     </Switch>
                 )}
             </Switch>
