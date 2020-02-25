@@ -40,7 +40,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         loadData() {
-            dispatch(me())
+            dispatch(me());
         }
     }
 }

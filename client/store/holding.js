@@ -11,8 +11,8 @@ const addHolding = holding => ({ type: ADD_HOLDING, holding });
 // thunk creators
 export const getHoldingsThunk = (id) => async dispatch => {
     try {
-        const res = await axios.get(/* holdings owned by user */);
-        console.log(res.data);
+        const { data } = await axios.get(`/api/holdings/${id}`);
+        dispatch(getHoldings({ holdings: data }));
     } catch (err) {
         console.error(err);
     }
