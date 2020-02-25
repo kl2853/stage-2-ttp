@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getPriceThunk, addHoldingThunk, makePurchaseThunk, updateBalanceThunk, insufficientFunds, clearPrice, clearError, clearWarning } from "../store";
+import debounce from "lodash/debounce";
 
 const SearchBar = props => {
     const { latestPrice, handleChange, handleSubmit, user, fetchErr, transactionErr } = props;
+
     return(
         <div>
             <div>
@@ -41,15 +43,19 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         handleChange(evt) {
-            let ticker = evt.target.value;
-            dispatch(clearWarning());
-            if(!!ticker.length) {
-                dispatch(clearError());
-                dispatch(getPriceThunk(ticker));
-            } else {
-                dispatch(clearError());
-                dispatch(clearPrice());
-            }
+            evt.persist();
+            let debouncedDispatch = debounce(function (evt) {
+                let ticker = evt.target.value;
+                dispatch(clearWarning());
+                if(!!ticker.length) {
+                    dispatch(clearError());
+                    dispatch(getPriceThunk(ticker));
+                } else {
+                    dispatch(clearError());
+                    dispatch(clearPrice());
+                }
+            }, 500);
+            debouncedDispatch(evt);
         },
         handleSubmit: user => price => evt => {
             evt.preventDefault();
