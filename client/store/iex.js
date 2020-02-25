@@ -2,7 +2,7 @@ import axios from "axios";
 import { IEX_PUBLIC_KEY, IEX_SECRET_KEY } from "../../keys";
  
 // base url and current version of api
-const baseUrl = "https://sandbox.iexapis.com/stable";
+const baseUrl = "https://cloud.iexapis.com/stable";
 
 // action types
 const GET_PRICE = "GET_PRICE";
