@@ -8,7 +8,10 @@ router.get("/:userId", async(req, res, next) => {
         const allHoldings = await Holding.findAll({
             where: {
                 userId: req.params.userId
-            }
+            },
+            order: [
+                ['id', 'DESC']
+            ]
         });
         res.json(allHoldings);
     } catch (err) {

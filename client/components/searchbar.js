@@ -42,11 +42,12 @@ const mapDispatch = dispatch => {
     return {
         handleChange(evt) {
             let ticker = evt.target.value;
-            dispatch(clearError());
             dispatch(clearWarning());
             if(!!ticker.length) {
+                dispatch(clearError());
                 dispatch(getPriceThunk(ticker));
             } else {
+                dispatch(clearError());
                 dispatch(clearPrice());
             }
         },

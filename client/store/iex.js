@@ -22,13 +22,13 @@ export const clearError = () => ({ type: CLEAR_ERROR });
 export const getPriceThunk = (ticker) => async dispatch => {
     let res;
     try {
-        res = await axios.get(`${baseUrl}/stock/${ticker}/quote?token=${IEX_PUBLIC_KEY}`);
+        res = await axios.get(`${baseUrl}/stock/${ticker}/quote/latestPrice?token=${IEX_PUBLIC_KEY}`);
     } catch (fetchErr) {
         return dispatch(getError(fetchErr));
     }
 
     try {
-        dispatch(getPrice(res.data.latestPrice));
+        dispatch(getPrice(res.data));
     } catch (err) {
         console.error(err);
     }
