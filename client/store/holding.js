@@ -38,8 +38,9 @@ export default function(state = stockHoldings, action) {
         case GET_HOLDINGS:
             return {...state, holdings: action.holdings}
         case ADD_HOLDING:
-            const added = state.holdings.filter(holding => holding.ticker !== action.ticker);
-            return {...state, holdings: added};
+            const ticker = action.holding.ticker;
+            const added = state.holdings.filter(holding => holding.ticker !== ticker);
+            return {...state, holdings: [...added, action.holding]};
         default:
             return state
     }
