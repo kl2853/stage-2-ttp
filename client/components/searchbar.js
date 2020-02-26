@@ -43,7 +43,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         handleChange(evt) {
+            // synthetic events in react don't persist after firing unless explicitly stated
             evt.persist();
+            // real time search debounced so that it doesn't fire continuously
             let debouncedDispatch = debounce(function (evt) {
                 let ticker = evt.target.value;
                 dispatch(clearWarning());
@@ -54,7 +56,7 @@ const mapDispatch = dispatch => {
                     dispatch(clearError());
                     dispatch(clearPrice());
                 }
-            }, 500);
+            }, 500); // only checks every 500 milliseconds for changes
             debouncedDispatch(evt);
         },
         handleSubmit: user => price => evt => {
@@ -66,7 +68,7 @@ const mapDispatch = dispatch => {
             let totalPrice = quantity * price;
             if(totalPrice > user.accountBalance) {
                 dispatch(insufficientFunds());
-            } else {
+            } else if(!!ticker.length) { // in case user selects all and deletes input value
                 dispatch(makePurchaseThunk(user.id, ticker, price, quantity, action));
                 dispatch(addHoldingThunk(user.id, ticker, { quantity }));
                 dispatch(updateBalanceThunk(user.id, totalPrice));

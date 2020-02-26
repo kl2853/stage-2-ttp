@@ -56,7 +56,7 @@ const mapSignup = state => {
 const mapDispatchAuth = dispatch => {
     return {
         handleSubmit(evt) {
-            evt.preventDefault();
+            evt.preventDefault(); // prevents page refresh
             const formName = evt.target.name;
             const fullName = (formName === "signup") 
                 ? evt.target.fullName.value

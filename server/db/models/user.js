@@ -18,6 +18,7 @@ const User = db.define("user", {
         type: Sequelize.STRING,
         get() {
             return () => this.getDataValue("password")
+            // workaround for sequelize's lack of private fields
         }
     },
     accountBalance: {

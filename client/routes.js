@@ -10,6 +10,7 @@ class Routes extends React.Component {
     }
 
     render() {
+        // verifying user throughout site
         const { isLoggedIn } = this.props;
 
         return(
