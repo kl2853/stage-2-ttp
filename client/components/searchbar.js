@@ -41,7 +41,6 @@ const mapState = state => {
 }
 
 // real time search debounced so that it doesn't fire continuously
-// must be declared outside of handleChange as it returns debounced fxn
 const debouncedDispatch = debounce(function (evt, dispatch) {
     let ticker = evt.target.value;
     dispatch(clearWarning());
@@ -63,8 +62,8 @@ const mapDispatch = dispatch => {
         },
         handleSubmit: user => price => evt => {
             evt.preventDefault();
-            let ticker = evt.target.ticker.value.toUpperCase();
-            let quantity = (+evt.target.quantity.value);
+            let ticker = evt.target.ticker.value.toUpperCase(); // consistent casing
+            let quantity = (+evt.target.quantity.value); // string -> number
             let action = "BUY";
             price = price * 100; // convert to integer for db, conversion not as lossy
             let totalPrice = quantity * price;
