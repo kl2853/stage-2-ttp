@@ -27,7 +27,7 @@ class HoldingsList extends React.Component {
             <div>
                 {(!!holdings && holdings.length && !!prices)
                     ? holdings.map(holding =>
-                        <Holding key={holding.ticker} holding={holding} latestPrice={mapped[holding.ticker]} />)
+                        <Holding key={holding.ticker} holding={holding} priceArr={mapped[holding.ticker]} />)
                     : `No holdings to display.`}
             </div>
         )

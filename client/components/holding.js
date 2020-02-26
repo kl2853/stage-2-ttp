@@ -12,17 +12,13 @@ const color = (latestPrice, openPrice) => {
 }
 
 const Holding = props => {
-    let { holding, latestPrice } = props;
-    
-    let openPrice = 120;
-    // const { holding, priceObj } = props;
-    // const { openPrice, latestPrice } = priceObj; open currently returning null from api
-    let diff
-    if(!!latestPrice) {
-        diff = latestPrice - openPrice;
-        latestPrice = latestPrice[1];
+    const { holding, priceArr } = props;
+    let openPrice = 0;
+    let latestPrice = 0;
+    if(priceArr && !!priceArr.length) {
+        openPrice = priceArr[0];
+        latestPrice = priceArr[1];
     }
-    
     return(
         <div>
             {holding.ticker}
