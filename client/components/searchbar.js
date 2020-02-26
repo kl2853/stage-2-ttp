@@ -40,24 +40,26 @@ const mapState = state => {
     }
 }
 
+// real time search debounced so that it doesn't fire continuously
+// must be declared outside of handleChange as it returns debounced fxn
+const debouncedDispatch = debounce(function (evt, dispatch) {
+    let ticker = evt.target.value;
+    dispatch(clearWarning());
+    if(!!ticker.length) {
+        dispatch(clearError());
+        dispatch(getPriceThunk(ticker));
+    } else {
+        dispatch(clearError());
+        dispatch(clearPrice());
+    }
+}, 500); // only checks every 500 milliseconds for changes
+
 const mapDispatch = dispatch => {
     return {
         handleChange(evt) {
             // synthetic events in react don't persist after firing unless explicitly stated
             evt.persist();
-            // real time search debounced so that it doesn't fire continuously
-            let debouncedDispatch = debounce(function (evt) {
-                let ticker = evt.target.value;
-                dispatch(clearWarning());
-                if(!!ticker.length) {
-                    dispatch(clearError());
-                    dispatch(getPriceThunk(ticker));
-                } else {
-                    dispatch(clearError());
-                    dispatch(clearPrice());
-                }
-            }, 500); // only checks every 500 milliseconds for changes
-            debouncedDispatch(evt);
+            debouncedDispatch(evt, dispatch);
         },
         handleSubmit: user => price => evt => {
             evt.preventDefault();
