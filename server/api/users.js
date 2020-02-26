@@ -3,20 +3,11 @@ const { User } = require("../db/models");
 
 module.exports = router;
 
-router.get("/:id", async(req, res, next) => {
+// necessary for user balance to update in real time due to combined redux state
+router.put("/:userId/buy", async(req, res, next) => {
     try {
-        const user = await User.findByPk(req.params.id);
-        res.json(user);
-    } catch (err) {
-        next(err);
-    }
-})
-
-router.put("/:id/buy", async(req, res, next) => {
-    try {
-        const user = await User.findByPk(req.params.id);
-        let prevBalance = user.accountBalance;
-        await user.update({ accountBalance: prevBalance - req.body.totalPrice });
+        const user = await User.findByPk(req.params.userId);
+        await user.update({ accountBalance: user.accountBalance - req.body.totalPrice });
         res.json(user);
     } catch (err) {
         next(err);
