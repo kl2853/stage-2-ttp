@@ -7,7 +7,6 @@ const baseUrl = "https://cloud.iexapis.com/stable";
 // action types
 const GET_PRICE = "GET_PRICE";
 const GET_BATCH_PRICES = "GET_BATCH_PRICES";
-const GET_BATCH_OPEN = "GET_BATCH_OPEN";
 const GET_ERROR = "GET_ERROR";
 const CLEAR_PRICE = "CLEAR_PRICE";
 const CLEAR_ERROR = "CLEAR_ERROR";
@@ -15,7 +14,6 @@ const CLEAR_ERROR = "CLEAR_ERROR";
 // action creators
 const getPrice = price => ({ type: GET_PRICE, price });
 const getBatchPrices = prices => ({ type: GET_BATCH_PRICES, prices });
-const getBatchOpen = openPrices => ({ type: GET_BATCH_OPEN, openPrices });
 const getError = error => ({ type: GET_ERROR, error });
 export const clearPrice = () => ({ type: CLEAR_PRICE });
 export const clearError = () => ({ type: CLEAR_ERROR });
@@ -40,22 +38,6 @@ export const getBatchPricesThunk = (tickers) => async dispatch => {
     let res;
     try {
         res = await axios.get(`${baseUrl}/stock/market/batch?symbols=${tickers}&types=quote&token=${IEX_PUBLIC_KEY}`);
-    } catch (fetchErr) {
-        return dispatch(getError(fetchErr));
-    }
-
-    try {
-        dispatch(getBatchPrices(res.data));
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-export const getBatchOpenThunk = () => async dispatch => {
-    let res;
-    try {
-        res = await axios.get(`${baseUrl}/deep/official-price?symbols=IBM,TSLA&token=${IEX_PUBLIC_KEY}`);
-        console.log(res);
     } catch (fetchErr) {
         return dispatch(getError(fetchErr));
     }
