@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Transaction, User } = require("../db/models");
+const { Transaction } = require("../db/models");
 
 module.exports = router;
 
@@ -29,7 +29,7 @@ router.get("/:userId/owned", async(req, res, next) => {
                 userId: req.params.userId
             }
         })
-        
+
         let listOwned = [];
         for(let i in eachShare) {
             let share = eachShare[i]["DISTINCT"]
