@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getHoldingsThunk } from "../store";
+import { getPortfolioThunk } from "../store";
 import HoldingsList from "./holdingslist";
 
 class Portfolio extends React.Component {
@@ -9,20 +9,20 @@ class Portfolio extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getHoldings(this.props.userId);
+        this.props.getPortfolio(this.props.userId);
 
     }
 
     render() {
         let tickerList;
-        if(!!this.props.holdings) {
-            tickerList = this.props.holdings.map(holding => holding.ticker).join(",");
+        if(!!this.props.owned) {
+            tickerList = this.props.owned.map(share => share.ticker).join(",");
         }
 
         return(
             <div>
-                {(!!this.props.holdings && this.props.holdings.length && tickerList.length)
-                    ?  <HoldingsList holdings={this.props.holdings} tickerList={tickerList} />
+                {(!!this.props.owned && this.props.owned.length && tickerList.length)
+                    ?  <HoldingsList holdings={this.props.owned} tickerList={tickerList} />
                     : `No holdings to display.`
                     }
             </div>
@@ -32,15 +32,15 @@ class Portfolio extends React.Component {
 
 const mapState = state => {
     return {
-        holdings: state.holdingState.holdings,
+        owned: state.transactionState.owned,
         userId: state.userState.id
     }
 }
 
 const mapDispatch = dispatch => {
     return {
-        getHoldings(id) {
-            dispatch(getHoldingsThunk(id));
+        getPortfolio(id) {
+            dispatch(getPortfolioThunk(id));
         }
     }
 }

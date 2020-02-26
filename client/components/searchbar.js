@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getPriceThunk, addHoldingThunk, makePurchaseThunk, updateBalanceThunk, insufficientFunds, clearPrice, clearError, clearWarning } from "../store";
+import { getPriceThunk, makePurchaseThunk, updateBalanceThunk, insufficientFunds, clearPrice, clearError, clearWarning } from "../store";
 import debounce from "lodash/debounce";
 
 const SearchBar = props => {
@@ -51,7 +51,7 @@ const debouncedDispatch = debounce(function (evt, dispatch) {
         dispatch(clearError());
         dispatch(clearPrice());
     }
-}, 500); // only checks every 500 milliseconds for changes
+}, 400); // only checks every 400 milliseconds for changes
 
 const mapDispatch = dispatch => {
     return {
@@ -71,8 +71,7 @@ const mapDispatch = dispatch => {
                 dispatch(insufficientFunds());
             } else if(!!ticker.length) { // in case user selects all and deletes input value
                 dispatch(makePurchaseThunk(user.id, ticker, price, quantity, action));
-                dispatch(addHoldingThunk(user.id, ticker, { quantity }));
-                dispatch(updateBalanceThunk(user.id, totalPrice));
+                dispatch(updateBalanceThunk(user.id, price, quantity));
             }
         }
     }

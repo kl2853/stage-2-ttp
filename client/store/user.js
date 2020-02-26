@@ -48,8 +48,9 @@ export const logout = () => async dispatch => {
     }
 }
 
-export const updateBalanceThunk = (id, totalPrice) => async dispatch => {
+export const updateBalanceThunk = (id, price, quantity) => async dispatch => {
     try {
+        const totalPrice = price * quantity;
         const { data } = await axios.put(`/api/users/${id}/buy`, { totalPrice });
         dispatch(updateBalance(data));
     } catch (err) {

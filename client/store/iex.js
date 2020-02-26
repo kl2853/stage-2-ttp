@@ -66,9 +66,9 @@ export default function(state = defaultIex, action) {
         case GET_ERROR:
             return {...state, error: action.error}
         case CLEAR_PRICE:
-            return {...state, price: 0}
+            return {...state, price: defaultIex.price}
         case CLEAR_ERROR:
-            return {...state, error: {}}
+            return {...state, error: defaultIex.error}
         default:
             return state
     }
