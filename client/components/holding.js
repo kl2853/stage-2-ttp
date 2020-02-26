@@ -17,9 +17,7 @@ const Holding = props => {
     let openPrice = 120;
     // const { holding, priceObj } = props;
     // const { openPrice, latestPrice } = priceObj; open currently returning null from api
-    let diff
     if(!!latestPrice) {
-        diff = latestPrice - openPrice;
         latestPrice = latestPrice[1];
     }
     
