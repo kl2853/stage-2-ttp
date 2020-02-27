@@ -14,7 +14,7 @@ const SearchBar = props => {
             <form onSubmit={handleSubmit(user)(query)}>
                 <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
                 <div>
-                    {(!!query) && <div> 
+                    {(!!query.symbol) && <div> 
                         <div>
                             Current price: ${query.latestPrice}
                         </div>
