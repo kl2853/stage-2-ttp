@@ -1,5 +1,5 @@
 ### FULL-STACK ASSESSMENT, STAGE 2 FOR TTP
-_Deployed on Heroku at:_ [Stock Portfolio](https://www.kat-le-stock-portfolio.herokuapp.com)
+_Deployed on Heroku at:_ [Stock Portfolio](https://kat-le-stock-portfolio.herokuapp.com/)
 
 **Front-end:** Built with JavaScript libraries React and Redux for user interface design and implementation, and state management, respectively.
 
