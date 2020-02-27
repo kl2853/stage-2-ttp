@@ -88,9 +88,10 @@ const startListening = () => {
 const syncDb = () => db.sync();
 
 async function startApp() {
-    syncDb();
-    createApp();
-    startListening();
+    await sessionStore.sync();
+    await syncDb();
+    await createApp();
+    await startListening();
 }
 
 startApp();
