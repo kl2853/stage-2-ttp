@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const db = require("./db");
 const compression = require("compression");
+const helmet = require("helmet");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const sessionStore = new SequelizeStore({ db });
@@ -25,7 +26,7 @@ passport.deserializeUser(async (id, done) => {
 
 const createApp = () => {
     // logging middleware
-    app.use(morgan("dev"));
+    app.use(morgan("combined"));
 
     // body parsing middleware
     app.use(express.json());
@@ -33,6 +34,9 @@ const createApp = () => {
 
     // compression middleware
     app.use(compression());
+
+    // security middleware
+    app.use(helmet());
 
     // sessions middleware
     app.use(
@@ -73,7 +77,6 @@ const createApp = () => {
 
     // development error handler
     app.use((err, req, res) => {
-        console.error(err, err.stack);
         res.status(err.status || 500).send(err.message || "Internal server error");
     })
 }
