@@ -12,13 +12,15 @@ const color = (latestPrice, openPrice) => {
 }
 
 const Holding = props => {
-    let { holding, latestPrice } = props;
-    
-    let openPrice = 120;
-    // const { holding, priceObj } = props;
-    // const { openPrice, latestPrice } = priceObj; open currently returning null from api
-    if(!!latestPrice) {
-        latestPrice = latestPrice[1];
+    let { holding, priceArr } = props;
+    let openPrice;
+    let latestPrice;
+    if(priceArr && !!priceArr.length) {
+        // day open prices are only available after 8pm
+        // at any other time user will see previous close prices
+        if(priceArr[0] !== null) openPrice = priceArr[0];
+        else openPrice = priceArr[2];
+        latestPrice = priceArr[1];
     }
     
     return(

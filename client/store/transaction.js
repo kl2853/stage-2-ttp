@@ -27,7 +27,6 @@ export const getPortfolioThunk = (id) => async dispatch => {
 export const makePurchaseThunk = (id, ticker, historicPrice, quantity, action) => async dispatch => {
     try {
         const { data } = await axios.post(`/api/transactions/${id}/buy`, { ticker, historicPrice, quantity, action });
-        console.log(data);
         dispatch(makePurchase({ ticker: data.transaction.ticker, quantity: data.numShares }));
     } catch (err) {
         console.error(err);
