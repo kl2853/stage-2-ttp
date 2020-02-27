@@ -5,30 +5,32 @@ import { IEX_PUBLIC_KEY, IEX_SECRET_KEY } from "../../keys";
 const baseUrl = "https://cloud.iexapis.com/stable";
 
 // action types
-const GET_PRICE = "GET_PRICE";
+const GET_QUERY = "GET_QUERY";
 const GET_BATCH_PRICES = "GET_BATCH_PRICES";
+const APPEND_PURCHASE = "APPEND_PURCHASE";
 const GET_ERROR = "GET_ERROR";
-const CLEAR_PRICE = "CLEAR_PRICE";
+const CLEAR_QUERY = "CLEAR_QUERY";
 const CLEAR_ERROR = "CLEAR_ERROR";
 
 // action creators
-const getPrice = price => ({ type: GET_PRICE, price });
+const getQuery = query => ({ type: GET_QUERY, query });
 const getBatchPrices = prices => ({ type: GET_BATCH_PRICES, prices });
 const getError = error => ({ type: GET_ERROR, error });
-export const clearPrice = () => ({ type: CLEAR_PRICE });
+export const appendPurchase = price => ({ type: APPEND_PURCHASE, price });
+export const clearQuery = () => ({ type: CLEAR_QUERY });
 export const clearError = () => ({ type: CLEAR_ERROR });
 
 // thunk creators
-export const getPriceThunk = (ticker) => async dispatch => {
+export const getQueryThunk = (ticker) => async dispatch => {
     let res;
     try {
-        res = await axios.get(`${baseUrl}/stock/${ticker}/quote/latestPrice?token=${IEX_PUBLIC_KEY}`);
+        res = await axios.get(`${baseUrl}/stock/${ticker}/quote?token=${IEX_PUBLIC_KEY}`);
     } catch (fetchErr) {
         return dispatch(getError(fetchErr));
     }
 
     try {
-        dispatch(getPrice(res.data));
+        dispatch(getQuery(res.data));
     } catch (err) {
         console.error(err);
     }
@@ -51,7 +53,7 @@ export const getBatchPricesThunk = (tickers) => async dispatch => {
 
 // initial state
 const defaultIex = {
-    price: 0,
+    query: {},
     prices: {},
     error: {}
 }
@@ -59,14 +61,17 @@ const defaultIex = {
 // reducer
 export default function(state = defaultIex, action) {
     switch(action.type) {
-        case GET_PRICE:
-            return {...state, price: action.price}
+        case GET_QUERY:
+            return {...state, query: action.query}
         case GET_BATCH_PRICES:
             return {...state, prices: action.prices}
         case GET_ERROR:
             return {...state, error: action.error}
-        case CLEAR_PRICE:
-            return {...state, price: defaultIex.price}
+        case APPEND_PURCHASE:
+            state.prices[action.price.symbol] = { quote: action.price }
+            return {...state, prices: state.prices};
+        case CLEAR_QUERY:
+            return {...state, query: defaultIex.query}
         case CLEAR_ERROR:
             return {...state, error: defaultIex.error}
         default:

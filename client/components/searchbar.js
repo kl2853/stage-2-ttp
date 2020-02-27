@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getPriceThunk, makePurchaseThunk, updateBalanceThunk, appendPurchase, insufficientFunds, clearPrice, clearError, clearWarning } from "../store";
+import { getQueryThunk, makePurchaseThunk, updateBalanceThunk, appendPurchase, insufficientFunds, clearQuery, clearError, clearWarning } from "../store";
 import debounce from "lodash/debounce";
 
 const SearchBar = props => {
@@ -33,7 +33,7 @@ const SearchBar = props => {
 
 const mapState = state => {
     return {
-        query: state.iexState.price,
+        query: state.iexState.query,
         user: state.userState,
         fetchErr: state.iexState.error,
         transactionErr: state.transactionState.error
@@ -46,10 +46,10 @@ const debouncedDispatch = debounce(function (evt, dispatch) {
     dispatch(clearWarning());
     if(!!ticker.length) {
         dispatch(clearError());
-        dispatch(getPriceThunk(ticker));
+        dispatch(getQueryThunk(ticker));
     } else {
         dispatch(clearError());
-        dispatch(clearPrice());
+        dispatch(clearQuery());
     }
 }, 400); // only checks every 400 milliseconds for changes
 
