@@ -3,13 +3,20 @@ import { connect } from "react-redux";
 import { getQueryThunk, makePurchaseThunk, updateBalanceThunk, appendPurchase, insufficientFunds, clearQuery, clearError, clearWarning } from "../store";
 import debounce from "lodash/debounce";
 
+const showCents = balance => {
+    balance = String(balance);
+   if(balance.slice(balance.length - 2) === "00") return ".00";
+   else return null;
+}
+
 const SearchBar = props => {
     const { query, handleChange, handleSubmit, user, fetchErr, transactionErr } = props;
+    const inDollars = user.accountBalance/100;
 
     return(
         <div>
             <div>
-                Account Balance: ${user.accountBalance/100}
+                Account Balance: ${inDollars}{showCents(inDollars)}
             </div>
             <form onSubmit={handleSubmit(user)(query)}>
                 <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
@@ -65,7 +72,7 @@ const mapDispatch = dispatch => {
             let ticker = evt.target.ticker.value.toUpperCase(); // consistent casing
             let quantity = (+evt.target.quantity.value); // string -> number
             let action = "BUY";
-            let price = Math.round(query.latestPrice * 100); // convert to integer for db, conversion not as lossy
+            let price = query.latestPrice * 100; // convert to integer for db, conversion not as lossy
             let totalPrice = quantity * price;
             if(totalPrice > user.accountBalance) {
                 dispatch(insufficientFunds());
