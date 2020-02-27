@@ -1,22 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getPriceThunk, makePurchaseThunk, updateBalanceThunk, insufficientFunds, clearPrice, clearError, clearWarning } from "../store";
+import { getPriceThunk, makePurchaseThunk, updateBalanceThunk, appendPurchase, insufficientFunds, clearPrice, clearError, clearWarning } from "../store";
 import debounce from "lodash/debounce";
 
 const SearchBar = props => {
-    const { latestPrice, handleChange, handleSubmit, user, fetchErr, transactionErr } = props;
+    const { query, handleChange, handleSubmit, user, fetchErr, transactionErr } = props;
 
     return(
         <div>
             <div>
                 Account Balance: ${user.accountBalance/100}
             </div>
-            <form onSubmit={handleSubmit(user)(latestPrice)}>
+            <form onSubmit={handleSubmit(user)(query)}>
                 <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
                 <div>
-                    {(!!latestPrice) && <div> 
+                    {(!!query) && <div> 
                         <div>
-                            Current price: ${latestPrice}
+                            Current price: ${query.latestPrice}
                         </div>
                             Quantity: <input name="quantity" type="number" step="1" min="1" required/>
                         <div>
@@ -33,7 +33,7 @@ const SearchBar = props => {
 
 const mapState = state => {
     return {
-        latestPrice: state.iexState.price,
+        query: state.iexState.price,
         user: state.userState,
         fetchErr: state.iexState.error,
         transactionErr: state.transactionState.error
@@ -60,18 +60,19 @@ const mapDispatch = dispatch => {
             evt.persist();
             debouncedDispatch(evt, dispatch);
         },
-        handleSubmit: user => price => evt => {
+        handleSubmit: user => query => evt => {
             evt.preventDefault();
             let ticker = evt.target.ticker.value.toUpperCase(); // consistent casing
             let quantity = (+evt.target.quantity.value); // string -> number
             let action = "BUY";
-            price = price * 100; // convert to integer for db, conversion not as lossy
+            let price = Math.round(query.latestPrice * 100); // convert to integer for db, conversion not as lossy
             let totalPrice = quantity * price;
             if(totalPrice > user.accountBalance) {
                 dispatch(insufficientFunds());
             } else if(!!ticker.length) { // in case user selects all and deletes input value
                 dispatch(makePurchaseThunk(user.id, ticker, price, quantity, action));
                 dispatch(updateBalanceThunk(user.id, price, quantity));
+                dispatch(appendPurchase(query))
             }
         }
     }
