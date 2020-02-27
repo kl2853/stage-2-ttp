@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- node # uses most recent stable version of node
+services:
+- postgresql # starts psql db
+addon:
+  postgresql: '10' # most recent psql version on travis
+dist: xenial # uses xenial environment
+notifications:
+  email:
+    on_sucess: change # default: change when broken --> fixed
+    on_failure: always # default: always
+install:
+- npm ci # faster, only package lock
+before_script:
+- psql -c `create database "stockportfolio";` -U postgres
+script:
+- npm run build-client
