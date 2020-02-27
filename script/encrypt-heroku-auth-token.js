@@ -89,6 +89,17 @@ const updateTravisYaml = (app, key) => {
         app: app,
         api_key: { secure: key }
     }))
+    doc.contents.items.filter(item => item.key in keyComments).forEach(item => {
+        item.comment = keyComments[item.key]
+        if (item.key === 'deploy') {
+          item.value.items.forEach(item_ => {
+            item_.commentBefore = keyComments[item_.key]
+          })
+        }
+      })
+      doc.comment = ''
+      fs.writeFileSync('.travis.yml', doc.toString())
+      return true
 }
 
 const main = async() => {
