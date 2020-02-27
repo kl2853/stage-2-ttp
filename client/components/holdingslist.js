@@ -18,7 +18,7 @@ class HoldingsList extends React.Component {
         if(!!prices && !!holdings) {
             mapped = Object.values(prices).reduce((acc, val) => {
                 acc[val.quote.symbol] = acc[val.quote.symbol] || [];
-                acc[val.quote.symbol].push(val.quote.open, val.quote.latestPrice);
+                acc[val.quote.symbol].push(val.quote.open, val.quote.latestPrice, val.quote.previousClose);
                 return acc;
             }, {});
         }
@@ -27,7 +27,7 @@ class HoldingsList extends React.Component {
             <div>
                 {(!!holdings && holdings.length && !!prices)
                     ? holdings.map(holding =>
-                        <Holding key={holding.ticker} holding={holding} latestPrice={mapped[holding.ticker]} />)
+                        <Holding key={holding.ticker} holding={holding} priceArr={mapped[holding.ticker]} />)
                     : `No holdings to display.`}
             </div>
         )
