@@ -10,6 +10,7 @@ const passport = require("passport");
 const path = require("path");
 const PORT = process.env.PORT || 1008;
 const app = express();
+const socketio = require("socket.io");
 
 module.exports = app;
 
@@ -86,6 +87,8 @@ const startListening = () => {
     const server = app.listen(PORT, () =>
         console.log(`All systems go at ${PORT}`)
     );
+    const io = socketio(server);
+    require("./socket")(io);
 }
 
 const syncDb = () => db.sync();

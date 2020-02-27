@@ -6,6 +6,9 @@ import { Provider } from "react-redux";
 import store from "./store";
 import App from "./app";
 
+// socket connection
+import "./socket";
+
 ReactDOM.render(
     <Provider store={store} >
         <Router history={history} >
