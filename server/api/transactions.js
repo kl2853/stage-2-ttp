@@ -54,7 +54,12 @@ router.get("/:userId/owned", async(req, res, next) => {
 // new transaction for given user, account balance updated accordingly
 router.post("/:userId/buy", async(req, res, next) => {
     try {
-        const transaction = await Transaction.create(req.body);
+        const transaction = await Transaction.create({
+            ticker: req.body.ticker,
+            historicPrice: req.body.historicPrice,
+            quantity: req.body.quantity,
+            action: req.body.action
+        });
         await transaction.update({ userId: req.params.userId });
         const numShares = await Transaction.sum("quantity", {
             where: {
