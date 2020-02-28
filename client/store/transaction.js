@@ -6,6 +6,7 @@ const MAKE_PURCHASE = "MAKE_PURCHASE";
 const GET_TRANSACTION_HISTORY = "GET_TRANSACTION_HISTORY";
 const INSUFFICIENT_FUNDS = "INSUFFICIENT_FUNDS";
 const CLEAR_WARNING = "CLEAR_WARNING";
+const CLEAR_TRANSACTION = "CLEAR_TRANSACTION";
 
 // action creators
 const getPortfolio = owned => ({ type: GET_PORTFOLIO, owned });
@@ -13,6 +14,7 @@ const makePurchase = purchase => ({ type: MAKE_PURCHASE, purchase });
 const getTransactionHistory = history => ({ type: GET_TRANSACTION_HISTORY, history });
 export const insufficientFunds = () => ({ type: INSUFFICIENT_FUNDS });
 export const clearWarning = () => ({ type: CLEAR_WARNING });
+export const clearTransaction = () => ({ type: CLEAR_TRANSACTION });
 
 // thunk creators
 export const getPortfolioThunk = (id) => async dispatch => {
@@ -69,6 +71,8 @@ export default function(state = defaultTransaction, action) {
             return {...state, error: err}
         case CLEAR_WARNING:
             return {...state, error: {}}
+        case CLEAR_TRANSACTION:
+            return defaultTransaction
         default:
             return state
     }

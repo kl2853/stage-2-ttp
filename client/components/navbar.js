@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store";
+import { logout, clearIex, clearTransaction } from "../store";
 
 const NavBar = ({ handleClick, isLoggedIn }) => (
     <div id="header">
@@ -20,7 +20,7 @@ const NavBar = ({ handleClick, isLoggedIn }) => (
                             <Link to="/mytransactions" className="navlink">TRANSACTIONS</Link>
                         </div>
                         <div className="navbutton">
-                            <a href="#" onClick={ handleClick } className="navlink">LOGOUT</a>
+                            <a href="#" onClick={handleClick} className="navlink">LOGOUT</a>
                         </div>
                     </div>
                 )
@@ -49,6 +49,8 @@ const mapDispatch = dispatch => {
     return {
         handleClick() {
             dispatch(logout());
+            dispatch(clearIex());
+            dispatch(clearTransaction());
         }
     }
 }

@@ -11,6 +11,7 @@ const APPEND_PURCHASE = "APPEND_PURCHASE";
 const GET_ERROR = "GET_ERROR";
 const CLEAR_QUERY = "CLEAR_QUERY";
 const CLEAR_ERROR = "CLEAR_ERROR";
+const CLEAR_IEX = "CLEAR_IEX";
 
 // action creators
 const getQuery = query => ({ type: GET_QUERY, query });
@@ -19,6 +20,7 @@ const getError = error => ({ type: GET_ERROR, error });
 export const appendPurchase = price => ({ type: APPEND_PURCHASE, price });
 export const clearQuery = () => ({ type: CLEAR_QUERY });
 export const clearError = () => ({ type: CLEAR_ERROR });
+export const clearIex = () => ({ type: CLEAR_IEX });
 
 // thunk creators
 export const getQueryThunk = (ticker) => async dispatch => {
@@ -69,11 +71,13 @@ export default function(state = defaultIex, action) {
             return {...state, error: action.error}
         case APPEND_PURCHASE:
             state.prices[action.price.symbol] = { quote: action.price }
-            return {...state, prices: state.prices};
+            return {...state, prices: state.prices}
         case CLEAR_QUERY:
             return {...state, query: defaultIex.query}
         case CLEAR_ERROR:
             return {...state, error: defaultIex.error}
+        case CLEAR_IEX:
+            return defaultIex
         default:
             return state
     }
