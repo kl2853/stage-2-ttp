@@ -1,10 +1,9 @@
 import React from "react";
 
 const color = (latestPrice, openPrice) => {
-    let diff = latestPrice - openPrice;
-    if(diff > 0) {
+    if(latestPrice > openPrice) {
         return "green";
-    } else if(diff < 0) {
+    } else if(latestPrice < openPrice) {
         return "red";
     } else {
         return "yellow"
@@ -37,7 +36,7 @@ const Holding = props => {
                 <div className="atsymbol">
                     @
                 </div>
-                <div className={(!!latestPrice && !!(latestPrice - openPrice)) ? color(latestPrice, openPrice) : null}>
+                <div className={(!!latestPrice && (!isNaN(latestPrice - openPrice))) ? color(latestPrice, openPrice) : null}>
                 ${latestPrice}
                 </div>
             </div>
