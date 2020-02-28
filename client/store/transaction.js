@@ -53,19 +53,22 @@ const defaultTransaction = {
 export default function(state = defaultTransaction, action) {
     switch(action.type) {
         case MAKE_PURCHASE:
-            const ticker = action.purchase.ticker;
-            const added = state.owned.filter(owned => owned.ticker !== ticker);
-            return {...state, owned: [...added, action.purchase]};
+            const ticker = action.purchase.ticker
+            let added = state.owned;
+            let idx = state.owned.findIndex(share => share.ticker === ticker)
+            if(idx !== -1) added[idx] = action.purchase;
+            else added = [...added, action.purchase];
+            return {...state, owned: [...added]}
         case GET_TRANSACTION_HISTORY:
             return {...state, history: action.history}
         case GET_PORTFOLIO:
             return {...state, owned: action.owned}
         case INSUFFICIENT_FUNDS:
-            const err = {};
-            err["response"] = "Insufficient funds";
-            return {...state, error: err};
+            const err = {}
+            err["response"] = "Insufficient funds"
+            return {...state, error: err}
         case CLEAR_WARNING:
-            return {...state, error: {}};
+            return {...state, error: {}}
         default:
             return state
     }
