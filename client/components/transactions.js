@@ -13,9 +13,8 @@ class Transactions extends React.Component {
     }
 
     render() {
-
         return(
-            <div>
+            <div id="transactions">
                 {(!!this.props.transactionHistory && this.props.transactionHistory.length)
                     ? this.props.transactionHistory.map(transaction => 
                         <Transaction key={transaction.id} transaction={transaction} />)

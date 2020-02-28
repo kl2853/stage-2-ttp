@@ -209,3 +209,54 @@ a.navlink {
 .green {
     color: #27AE60;
 }
+
+#transactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.transxndetails {
+    display: flex;
+    flex-direction: column;
+    width: 650px;
+    margin: 5px;
+    padding: 10px;
+    border-bottom: solid black;
+}
+
+.histdetails {
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+}
+
+.histaction {
+    text-align: start;
+    width: 100px;
+}
+
+.histsymbol {
+    text-align: start;
+    width: 280px;
+}
+
+.histqty {
+    text-align: start;
+    width: 90px;
+}
+
+.histatsymbol {
+    text-align: start;
+    width: 90px;
+}
+
+.histprice {
+    text-align: start;
+    width: 80px;
+}
+
+.transxntime {
+    width: 650px;
+    text-align: end;
+}
