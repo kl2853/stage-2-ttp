@@ -26,6 +26,9 @@ passport.deserializeUser(async (id, done) => {
 });
 
 const createApp = () => {
+    // security middleware
+    app.use(helmet());
+
     // logging middleware
     app.use(morgan("combined"));
 
@@ -35,9 +38,6 @@ const createApp = () => {
 
     // compression middleware
     app.use(compression());
-
-    // security middleware
-    app.use(helmet());
 
     // sessions middleware
     app.use(
