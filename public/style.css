@@ -1,5 +1,6 @@
 body {
     font-family: 'Spartan';
+    font-size: large;
 }
 
 #header {
@@ -21,6 +22,7 @@ body {
     justify-content: flex-end;
     padding: 15px;
     margin: 20px;
+    background-color: ;
 }
 
 #navcontainer {
@@ -93,8 +95,59 @@ a.navlink {
     margin: auto;
 }
 
-.red {color: #CF000F;}
-.yellow {color: #FFC153;}
-.green {color: #27AE60;}
-.black {color: #000000;}
-.blue {color: blue};
+#body {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.rtstock {
+    display: flex;
+    align-items: flex-start;
+}
+
+.rtstockcontainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.atsymbol {
+    text-align: start;
+    height: 30px;
+    flex-shrink: 0;
+    width: 90px;
+}
+
+.holding {
+    text-align: start;
+    width: 280px;
+}
+
+.qty {
+    box-sizing: border-box;
+    text-align: start;
+    width: 90px;
+}
+
+#searchwidget {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 15px;
+}
+
+.red {
+    color: #CF000F;
+}
+
+.yellow {
+    color: #FFC153;
+}
+
+.green {
+    color: #27AE60;
+}
+.black {
+    color: #000000;
+}

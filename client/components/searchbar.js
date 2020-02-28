@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getQueryThunk, makePurchaseThunk, updateBalanceThunk, appendPurchase, insufficientFunds, clearQuery, clearError, clearWarning } from "../store";
 import debounce from "lodash/debounce";
 
-const showCents = balance => {
+export const showCents = balance => {
     balance = String(balance);
    if(balance.slice(balance.length - 2) === "00") return ".00";
    else return null;
@@ -18,23 +18,25 @@ const SearchBar = props => {
             <div>
                 Account Balance: ${inDollars}{showCents(inDollars)}
             </div>
-            <form onSubmit={handleSubmit(user)(query)}>
-                <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
-                <div>
-                    {(!!query.symbol) && <div> 
-                        <div>
-                            Current price: ${query.latestPrice}
-                        </div>
-                            Quantity: <input name="quantity" type="number" step="1" min="1" required/>
-                        <div>
-                            <button type="submit" disabled={!!fetchErr.response}>Buy</button>
-                        </div>
-                        </div>}
-                    {fetchErr && fetchErr.response && <div> {fetchErr.response.data} </div>}
-                    {transactionErr && transactionErr.response && <div> {transactionErr.response} </div>}
-                </div>
-            </form>
-        </div>
+            <div id="searchwidget">
+                <form onSubmit={handleSubmit(user)(query)}>
+                    <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
+                    <div>
+                        {(!!query.symbol) && <div> 
+                            <div>
+                                Current price: ${query.latestPrice}
+                            </div>
+                                Quantity: <input name="quantity" type="number" step="1" min="1" required/>
+                            <div>
+                                <button type="submit" disabled={!!fetchErr.response}>Buy</button>
+                            </div>
+                            </div>}
+                        {fetchErr && fetchErr.response && <div> {fetchErr.response.data} </div>}
+                        {transactionErr && transactionErr.response && <div> {transactionErr.response} </div>}
+                    </div>
+                </form>
+            </div>
+            </div>
     )
 }
 

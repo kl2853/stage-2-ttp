@@ -25,11 +25,23 @@ const Holding = props => {
     
     return(
         <div>
-            {holding.ticker}
-            <div>
-            {holding.quantity} @ <div className={(!!latestPrice && !!(latestPrice - openPrice)) ? color(latestPrice, openPrice) : null} > {latestPrice} </div>
-            </div>
-            <hr />
+            <div className="rtstock">
+                <div className="rtstockcontainer">
+                    <div className="holding">
+                        {holding.ticker}
+                    </div>
+                    <div className="qty">
+                        {holding.quantity} 
+                    </div>
+                </div>
+                <div className="rtstockcontainer"></div>
+                    <div className="atsymbol">
+                        @
+                    </div>
+                    <div className={(!!latestPrice && !!(latestPrice - openPrice)) ? color(latestPrice, openPrice) : null}>
+                    {latestPrice}
+                    </div>
+                </div>
         </div>
     )
 }

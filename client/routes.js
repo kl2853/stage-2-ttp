@@ -20,7 +20,7 @@ class Routes extends React.Component {
                 {isLoggedIn && (
                     <Switch>
                         <Route path="/myportfolio" render={props => 
-                            <div>
+                            <div id="body">
                                 <Portfolio />
                                 <SearchBar />
                             </div>} />
