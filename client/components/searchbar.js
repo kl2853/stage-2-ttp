@@ -14,29 +14,31 @@ const SearchBar = props => {
     const inDollars = user.accountBalance/100;
 
     return(
-        <div>
+        <div id="purchase">
             <div>
                 Account Balance: ${inDollars}{showCents(inDollars)}
             </div>
             <div id="searchwidget">
                 <form onSubmit={handleSubmit(user)(query)}>
                     <input name="ticker" onChange={handleChange} placeholder="Search by ticker symbol" />
-                    <div>
-                        {(!!query.symbol) && <div> 
-                            <div>
+                    <div id="results">
+                        {(!!query.symbol) && <div className="query"> 
+                            <div id="qprice">
                                 Current price: ${query.latestPrice}
-                            </div>
+                            </div >
+                            <div id="purchaseqty">
                                 Quantity: <input name="quantity" type="number" step="1" min="1" required/>
-                            <div>
-                                <button type="submit" disabled={!!fetchErr.response}>Buy</button>
+                            </div>
+                            <div id="purchasebtn">
+                                <button type="submit" disabled={!!fetchErr.response || !!transactionErr.response}>Buy</button>
                             </div>
                             </div>}
-                        {fetchErr && fetchErr.response && <div> {fetchErr.response.data} </div>}
-                        {transactionErr && transactionErr.response && <div> {transactionErr.response} </div>}
+                        {fetchErr && fetchErr.response && <div className="error"> {fetchErr.response.data} </div>}
+                        {transactionErr && transactionErr.response && <div className="error"> {transactionErr.response} </div>}
                     </div>
                 </form>
             </div>
-            </div>
+        </div>
     )
 }
 
@@ -74,7 +76,7 @@ const mapDispatch = dispatch => {
             let ticker = evt.target.ticker.value.toUpperCase(); // consistent casing
             let quantity = (+evt.target.quantity.value); // string -> number
             let action = "BUY";
-            let price = query.latestPrice * 100; // convert to integer for db, conversion not as lossy
+            let price = Math.round(query.latestPrice * 100); // convert to integer for db, conversion not as lossy, rounding to get prices to 2 decimal places max
             let totalPrice = quantity * price;
             if(totalPrice > user.accountBalance) {
                 dispatch(insufficientFunds());

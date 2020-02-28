@@ -20,7 +20,7 @@ class Portfolio extends React.Component {
         }
 
         return(
-            <div>
+            <div id="portfolio">
                 {(!!this.props.owned && this.props.owned.length && tickerList.length)
                     ?  <HoldingsList holdings={this.props.owned} tickerList={tickerList} />
                     : `No holdings to display.`

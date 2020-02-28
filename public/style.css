@@ -30,7 +30,6 @@ a:visited {
     display: flex;
     justify-content: flex-end;
     padding: 15px;
-    margin: 20px;
     background-color: ;
 }
 
@@ -105,13 +104,19 @@ a.navlink {
 
 #body {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
+}
+
+#portfolio {
+    height: 600px;
+    padding: 2px;
+    overflow: scroll;
 }
 
 .rtstock {
     display: flex;
-    align-items: flex-start;
+    height: 35px;
 }
 
 .rtstockcontainer {
@@ -137,12 +142,60 @@ a.navlink {
     width: 90px;
 }
 
+#purchase {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
 #searchwidget {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     margin: auto;
     padding: 15px;
+}
+
+#searchwidget input {
+    width: 220px;
+    position: relative;
+    padding: 2px;
+}
+
+#purchasebtn {
+    text-align: center;
+    justify-content: center;
+}
+
+#purchasebtn button:disabled {
+    color: lightslategray;
+}
+
+#results {
+    justify-content: center
+}
+
+.query {
+    display: flex;
+    flex-direction: column;
+}
+
+#qprice {
+    padding: 8px;
+}
+
+#purchaseqty {
+    padding: 8px;
+}
+
+#purchaseqty input {
+    width: 40px;
+}
+
+.error {
+    padding: 8px;
+    text-align: center;
 }
 
 .red {
