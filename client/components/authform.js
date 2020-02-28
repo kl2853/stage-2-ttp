@@ -6,33 +6,39 @@ const AuthForm = props => {
     const { name, displayName, handleSubmit, error } = props;
     
     return(
-        <div>
-            <form onSubmit={handleSubmit} name={name}>
-                { (name === "signup") &&
-                (<div>
-                    <label htmlFor="fullName">
-                        <small>FULL NAME</small>
-                    </label>
-                    <input name="fullName" type="text" />
-                </div>)
-                }
-                <div>
-                    <label htmlFor="email">
-                        <small>EMAIL</small>
-                    </label>
-                    <input name="email" type="text" />
-                </div>
-                <div>
-                    <label htmlFor="password">
-                        <small>PASSWORD</small>
-                    </label>
-                    <input name="password" type="password" />
-                </div>
-                <div>
-                    <button type="submit">{displayName}</button>
-                </div>
-                {error && error.response && <div> {error.response.data} </div>}
-            </form>
+        <div id="authform">
+            <div className="formcontainer">
+                <form onSubmit={handleSubmit} name={name}>
+                    <div className="row">
+                        <div className="col" >
+                        { (name === "signup") &&
+                            (<label htmlFor="fullName">
+                                <small>FULL NAME</small>
+                            </label>)
+                        }
+                            <label htmlFor="email">
+                                <small>EMAIL</small>
+                            </label>
+                            <label htmlFor="password">
+                                <small>PASSWORD</small>
+                            </label>
+                        </div>
+                        <div className="col">
+                        { (name === "signup") &&
+                            (<input name="fullName" type="text" placeholder="FULL NAME" />)
+                        }
+                            <input name="email" type="text" placeholder="EMAIL ADDRESS" />
+                            <input name="password" type="password" placeholder="PASSWORD" />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div id="formbutton">
+                            <button type="submit">{displayName}</button>
+                        </div>
+                    </div>
+                    {error && error.response && <div> {error.response.data} </div>}
+                </form>
+            </div>
         </div>
     )
 }
@@ -40,7 +46,7 @@ const AuthForm = props => {
 const mapLogin = state => {
     return {
         name: "login",
-        displayName: "Login",
+        displayName: "LOGIN",
         error: state.userState.error
     }
 }
@@ -48,7 +54,7 @@ const mapLogin = state => {
 const mapSignup = state => {
     return {
         name: "signup",
-        displayName: "Sign Up",
+        displayName: "SIGN UP",
         error: state.userState.error
     }
 }

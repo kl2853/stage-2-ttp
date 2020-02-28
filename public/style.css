@@ -1,3 +1,98 @@
+body {
+    font-family: 'Spartan';
+}
+
+#header {
+    align-content: center;
+    flex-direction: row;
+}
+
+#logocontainer {
+    text-align: center;
+}
+
+#logo {
+    vertical-align: middle;
+    margin-top: 100px;
+}
+
+#navbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    margin: 20px;
+}
+
+#navcontainer {
+    display: flex;
+    align-content: flex-end;
+}
+
+a.navlink {
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbutton {
+    justify-self: center;
+    padding: 15px;
+    margin: 15px;
+}
+
+#authform {
+    text-align: center;
+    padding: 10%
+}
+
+#authform .formcontainer {
+    display: inline-block;
+}
+
+#authform form {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 20px;
+}
+
+#authform form .row {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+#authform form .col {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#authform form .col label {
+    padding: 2px;
+    margin: 5px;
+    text-align: right;
+}
+
+#authform form .col input {
+    padding: 3px;
+    margin: 5px;
+    align-self: flex-start;
+    width: 200px;
+}
+
+#formbutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 150px;
+}
+
+#authform form button {
+    margin: auto;
+}
+
 .red {color: #CF000F;}
 .yellow {color: #FFC153;}
 .green {color: #27AE60;}

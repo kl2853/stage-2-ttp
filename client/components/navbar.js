@@ -4,27 +4,38 @@ import { Link } from "react-router-dom";
 import { logout } from "../store";
 
 const NavBar = ({ handleClick, isLoggedIn }) => (
-    <div>
-        <h3>Stock Portfolio</h3>
-            <nav>
-                {
-                    isLoggedIn
-                    ? (
-                        <div>
-                            <Link to="/myportfolio">Portfolio</Link>
-                            <Link to="/mytransactions">Transactions</Link>
-                            <a href="#" onClick={ handleClick }>Logout</a>
+    <div id="header">
+        <div id="logocontainer">
+            <h1 id="logo">STOCK PORTFOLIO</h1>
+        </div>
+        <nav id="navbar">
+            {
+                isLoggedIn
+                ? (
+                    <div id="navcontainer">
+                        <div className="navbutton">
+                            <Link to="/myportfolio" className="navlink">PORTFOLIO</Link>
                         </div>
-                    )
-                    : (
-                        <div>
-                            <Link to="/login">Login</Link>
-                            <Link to="/signup">Signup</Link>
+                        <div className="navbutton">
+                            <Link to="/mytransactions" className="navlink">TRANSACTIONS</Link>
                         </div>
-                    )
-                }
-            </nav>
-        <hr />
+                        <div className="navbutton">
+                            <a href="#" onClick={ handleClick } className="navlink">LOGOUT</a>
+                        </div>
+                    </div>
+                )
+                : (
+                    <div id="navcontainer">
+                        <div className="navbutton">
+                            <Link to="/login" className="navlink">LOGIN</Link>
+                        </div>
+                        <div className="navbutton">
+                            <Link to="/signup" className="navlink">SIGNUP</Link>
+                        </div>
+                    </div>
+                )
+            }
+        </nav>
     </div>
 )
 
