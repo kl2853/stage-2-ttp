@@ -27,6 +27,7 @@ class Routes extends React.Component {
                         <Route path="/mytransactions" component={Transactions} />
                     </Switch>
                 )}
+                <Route component={Login} />
             </Switch>
         )
     }
