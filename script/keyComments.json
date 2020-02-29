@@ -1,0 +1,7 @@
+{
+  "api_key": "encrypted value",
+  "app": "app name",
+  "before_deploy": "omit node_modules, since we set skip_cleanup below",
+  "deploy": "yaml file key",
+  "skip_cleanup": "prevents travis from deleting the build"
+}

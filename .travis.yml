@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-- node # uses most recent stable version of node
+  - node # uses most recent stable version of node
 services:
-- postgresql # starts psql db
+  - postgresql # starts psql db
 addon:
   postgresql: '10' # most recent psql version on travis
 dist: xenial # uses xenial environment
@@ -11,8 +11,19 @@ notifications:
     on_sucess: change # default: change when broken --> fixed
     on_failure: always # default: always
 install:
-- npm ci # faster, only package lock
+  - npm ci # faster, only package lock
 before_script:
-- psql -c `create database "stockportfolio";` -U postgres
+  - psql -c `create database "stockportfolio";` -U postgres
 script:
-- npm run build-client
+  - npm run build-client
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy:
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name
+  app: kat-le-stock-portfolio
+  # the secure key indicates an encrypted value
+  api_key:
+    secure: 1AlKhWV9ar6AT/wcfbIkAA5CFzx9ULz2qEBYV8NlmtsPhiSH96nKTwvDZJwQK1qS4m6RqkSqTigSuf2K/tk7It5ioMmXO55npyp1LJ1L8admk5MEJVD12Eku5mN4OXv7z/knVwUrmvB9VKUndjLRkHaSfJWZeQ+cQGKj+0YaUVTVpjf0YQ8vucQu2lvqYX79cP6aTxtoCSdthBBNVbdwFpIS+kSSvv9aaPIXLA2LykgubiOG03NpemDklbFMKhUVz//Fd/am+Gp4TCQVT25VykOtRekCTjgwy1SYANSn9EoKZaKU1ciCJjFvF7Pe7omHopStT2b/zdUjQl+GnPfmCluEXFxG4b+hl13SzIthzHsDEmRYekVfOLG75WVJ0ycXrOo/B0VAr/37/R0BgtIqi8IwtE9y2uC+JpJq9viUOVLFls2+XbBF6OtNsrhwAiIMv4DpvSwS95vLLdaa0FptRnFWyow/Qgie/3Y5zv7ralEMYu7IlevemtqQKByQVa3InhLi5qW5SlW9ImaOAgSqXyBPYnbQehG77sy///OuzGJnUul4aheg7pIyOzkDAm2GkpuxWUeNYP2SuC+wPwr1JfQ3CynFgObtDSXMYqAHj2rN0Sk1jT62oxAUvyyBXWz21BUr3r+P5AogwVlFRpIoSCkP8RzTJycwsF0gat6R/4Q=
