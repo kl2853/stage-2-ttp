@@ -100,10 +100,10 @@ const updateTravisYaml = (app, key) => {
   doc.set(
     'deploy',
     Yaml.createNode({
-      skip_cleanup: true, //eslint-disable-line
+      skip_cleanup: true,
       provider: 'heroku',
       app: app,
-      api_key: {secure: key} //eslint-disable-line
+      api_key: {secure: key}
     })
   )
   doc.contents.items.filter(item => item.key in keyComments).forEach(item => {
