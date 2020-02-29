@@ -10,7 +10,7 @@ export const showCents = balance => {
 }
 
 const SearchBar = props => {
-    const { query, handleChange, handleSubmit, user, fetchErr, transactionErr } = props;
+    const { query, handleChange, handleQty, handleSubmit, user, fetchErr, transactionErr } = props;
     const inDollars = user.accountBalance/100;
 
     return(
@@ -27,7 +27,7 @@ const SearchBar = props => {
                                 Current price: ${query.latestPrice}
                             </div >
                             <div id="purchaseqty">
-                                Quantity: <input name="quantity" type="number" step="1" min="1" required/>
+                                Quantity: <input name="quantity" onChange={handleQty(user)(query)} type="number" step="1" min="1" required/>
                             </div>
                             <div id="purchasebtn">
                                 <button type="submit" disabled={!!fetchErr.response || !!transactionErr.response}>Buy</button>
@@ -71,12 +71,22 @@ const mapDispatch = dispatch => {
             evt.persist();
             debouncedDispatch(evt, dispatch);
         },
+        handleQty: user => query => evt => {
+            let quantity = (+evt.target.value); // string -> number
+            let price = Math.round(query.latestPrice * 100); // convert to integer for db, conversion not as lossy, rounding to get prices to 2 decimal places max
+            let totalPrice = quantity * price;
+            if(totalPrice > user.accountBalance) {
+                dispatch(insufficientFunds());
+            } else {
+                dispatch(clearWarning());
+            }
+        },
         handleSubmit: user => query => evt => {
             evt.preventDefault();
             let ticker = evt.target.ticker.value.toUpperCase(); // consistent casing
-            let quantity = (+evt.target.quantity.value); // string -> number
+            let quantity = (+evt.target.quantity.value);
             let action = "BUY";
-            let price = Math.round(query.latestPrice * 100); // convert to integer for db, conversion not as lossy, rounding to get prices to 2 decimal places max
+            let price = Math.round(query.latestPrice * 100);
             let totalPrice = quantity * price;
             if(totalPrice > user.accountBalance) {
                 dispatch(insufficientFunds());
