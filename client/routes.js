@@ -1,17 +1,17 @@
-import React from "react";
-import { withRouter, Route, Switch } from "react-router-dom";
-import { connect } from "react-redux";
-import { me } from "./store";
-import { Login, Signup, Portfolio, SearchBar, Transactions } from "./components";
+import React from "react"
+import { withRouter, Route, Switch } from "react-router-dom"
+import { connect } from "react-redux"
+import { me } from "./store"
+import { Login, Signup, Portfolio, SearchBar, Transactions } from "./components"
 
 class Routes extends React.Component {
     componentDidMount() {
-        this.props.loadData();
+        this.props.loadData()
     }
 
     render() {
         // verifying user throughout site
-        const { isLoggedIn } = this.props;
+        const { isLoggedIn } = this.props
 
         return(
             <Switch>
@@ -41,9 +41,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         loadData() {
-            dispatch(me());
+            dispatch(me())
         }
     }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(Routes));
+export default withRouter(connect(mapState, mapDispatch)(Routes))

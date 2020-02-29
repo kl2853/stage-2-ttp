@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+const Sequelize = require("sequelize")
+const db = require("../db")
+const bcrypt = require("bcrypt")
+const saltRounds = 10
 
 const User = db.define("user", {
     name: {
@@ -31,34 +31,34 @@ const User = db.define("user", {
 // class methods
 User.encryptPassword = function(plainText) {
     try {
-        let encrypted = bcrypt.hashSync(plainText, saltRounds);
-        return encrypted;
+        let encrypted = bcrypt.hashSync(plainText, saltRounds)
+        return encrypted
     } catch (err) {
-        console.error(err);
+        console.error(err)
     }
 }
 
 // instance methods
 User.prototype.validPassword = function(candidatePwd) {
     try {
-        let validity = bcrypt.compareSync(candidatePwd, this.password());
-        return validity;
+        let validity = bcrypt.compareSync(candidatePwd, this.password())
+        return validity
     } catch (err) {
-        console.error(err);
+        console.error(err)
     }
 }
 
 // hooks for encryption
 const setPassword = user => {
     if(user.changed("password")) {
-        user.password = User.encryptPassword(user.password());
+        user.password = User.encryptPassword(user.password())
     }
 }
 
-User.beforeCreate(setPassword);
-User.beforeUpdate(setPassword);
+User.beforeCreate(setPassword)
+User.beforeUpdate(setPassword)
 User.beforeBulkCreate(users => {
-    users.forEach(setPassword);
+    users.forEach(setPassword)
 })
 
-module.exports = User;
+module.exports = User

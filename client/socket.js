@@ -1,5 +1,5 @@
-import io from "socket.io-client";
+import io from "socket.io-client"
 
-const socket = io(window.location.origin);
+const socket = io(window.location.origin)
 
-export default socket;
+export default socket

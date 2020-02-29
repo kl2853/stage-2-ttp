@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 
 const toTimestamp = (isoTime) => {
-    let converted = String(new Date(isoTime)).split(" ");
+    let converted = String(new Date(isoTime)).split(" ")
     let date = converted[1] + " " + converted[2] + " " + converted[3] + ", "
-    let time = converted[4].split(":");
-    time = (time[0] % 12) + ":" + time[1] + ":" + time[2] + " " + (time[0] >= 12 ? "PM" : "AM");
-    return (date + time);
+    let time = converted[4].split(":")
+    time = (time[0] % 12) + ":" + time[1] + ":" + time[2] + " " + (time[0] >= 12 ? "PM" : "AM")
+    return (date + time)
 }
 
 const Transaction = props => {
-    const { ticker, historicPrice, quantity, action, createdAt } = props.transaction;
+    const { ticker, historicPrice, quantity, action, createdAt } = props.transaction
     return(
         <div className="transxndetails">
             <div className="histdetails">
@@ -36,4 +36,4 @@ const Transaction = props => {
     )
 }
 
-export default Transaction;
+export default Transaction

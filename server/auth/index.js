@@ -1,7 +1,7 @@
-const router = require("express").Router();
-const User = require("../db/models/user");
+const router = require("express").Router()
+const User = require("../db/models/user")
 
-module.exports = router;
+module.exports = router
 
 router.post("/login", async(req, res, next) => {
     try {
@@ -9,20 +9,20 @@ router.post("/login", async(req, res, next) => {
             where: {
                 email: req.body.email
             }
-        });
+        })
 
         if(!user) {
-            res.status(401).send("This email is not associated with an account");
+            res.status(401).send("This email is not associated with an account")
         } else if(!user.validPassword(req.body.password)) {
-            res.status(401).send("The email or password is incorrect");
+            res.status(401).send("The email or password is incorrect")
         } else {
             req.login(user, err => (err 
                 ? next(err) 
                 : res.json(user)
-            ));
+            ))
         }
     } catch (err) {
-        next(err);
+        next(err)
     }
 })
 
@@ -32,26 +32,26 @@ router.post("/signup", async(req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password
-        });
+        })
         req.login(user, err => (err
             ? next(err)
             : res.json(user)
-        ));
+        ))
     } catch (err) {
         if(err.name === "SequelizeUniqueConstraintError") {
-            res.status(401).send("This email is already in use");
+            res.status(401).send("This email is already in use")
         } else {
-            next(err);
+            next(err)
         }
     }
 })
 
 router.post("/logout", (req, res) => {
-    req.logout();
-    req.session.destroy();
-    res.redirect("/");
+    req.logout()
+    req.session.destroy()
+    res.redirect("/")
 })
 
 router.get("/me", (req, res) => {
-    res.json(req.user);
+    res.json(req.user)
 })

@@ -1,4 +1,4 @@
-const devMode = (process.env.NODE_ENV === "development");
+const devMode = (process.env.NODE_ENV === "development")
 
 module.exports = {
     mode: devMode ? "development" : "production",

@@ -1,15 +1,15 @@
-import React from "react";
-import { connect } from "react-redux";
-import { getTransactionHistoryThunk } from "../store";
-import Transaction from "./transaction";
+import React from "react"
+import { connect } from "react-redux"
+import { getTransactionHistoryThunk } from "../store"
+import Transaction from "./transaction"
 
 class Transactions extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     componentDidMount() {
-        this.props.getHistory(this.props.userId);
+        this.props.getHistory(this.props.userId)
     }
 
     render() {
@@ -34,9 +34,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         getHistory(id) {
-            dispatch(getTransactionHistoryThunk(id));
+            dispatch(getTransactionHistoryThunk(id))
         }
     }
 }
 
-export default connect(mapState, mapDispatch)(Transactions);
+export default connect(mapState, mapDispatch)(Transactions)

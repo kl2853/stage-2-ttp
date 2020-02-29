@@ -1,7 +1,7 @@
-const router = require("express").Router();
-const { Transaction } = require("../db/models");
+const router = require("express").Router()
+const { Transaction } = require("../db/models")
 
-module.exports = router;
+module.exports = router
 
 // get transaction history for given user
 router.get("/:userId", async(req, res, next) => {
@@ -13,10 +13,10 @@ router.get("/:userId", async(req, res, next) => {
             order: [
                 ['updatedAt', 'DESC']
             ]
-        });
-        res.json(allTransactions);
+        })
+        res.json(allTransactions)
     } catch (err) {
-        next(err);
+        next(err)
     }
 })
 
@@ -30,7 +30,7 @@ router.get("/:userId/owned", async(req, res, next) => {
             }
         })
 
-        let listOwned = [];
+        let listOwned = []
         for(let i in eachShare) {
             let share = eachShare[i]["DISTINCT"]
             const numShares = await Transaction.sum("quantity", {
@@ -45,9 +45,9 @@ router.get("/:userId/owned", async(req, res, next) => {
             })
         }
 
-        res.json(listOwned);
+        res.json(listOwned)
     } catch (err) {
-        next(err);
+        next(err)
     }
 })
 
@@ -59,16 +59,16 @@ router.post("/:userId/buy", async(req, res, next) => {
             historicPrice: req.body.historicPrice,
             quantity: req.body.quantity,
             action: req.body.action
-        });
-        await transaction.update({ userId: req.params.userId });
+        })
+        await transaction.update({ userId: req.params.userId })
         const numShares = await Transaction.sum("quantity", {
             where: {
                 userId: req.params.userId,
                 ticker: req.body.ticker
             }
-        });
-        res.json({ transaction, numShares });
+        })
+        res.json({ transaction, numShares })
     } catch (err) {
-        next(err);
+        next(err)
     }
 })

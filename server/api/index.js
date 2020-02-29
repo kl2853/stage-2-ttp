@@ -1,12 +1,12 @@
-const router = require("express").Router();
+const router = require("express").Router()
 
-module.exports = router;
+module.exports = router
 
-router.use("/transactions", require("./transactions"));
-router.use("/users", require("./users"));
+router.use("/transactions", require("./transactions"))
+router.use("/users", require("./users"))
 
 router.use((req, res, next) => {
-    const err = new Error("Not found");
-    err.status = 404;
-    next(err);
+    const err = new Error("Not found")
+    err.status = 404
+    next(err)
 })

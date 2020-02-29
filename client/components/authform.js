@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { auth } from "../store";
+import React from "react"
+import { connect } from "react-redux"
+import { auth } from "../store"
 
 const AuthForm = props => {
-    const { name, displayName, handleSubmit, error } = props;
+    const { name, displayName, handleSubmit, error } = props
     
     return(
         <div id="authform">
@@ -62,17 +62,17 @@ const mapSignup = state => {
 const mapDispatchAuth = dispatch => {
     return {
         handleSubmit(evt) {
-            evt.preventDefault(); // prevents page refresh
-            const formName = evt.target.name;
+            evt.preventDefault() // prevents page refresh
+            const formName = evt.target.name
             const fullName = (formName === "signup") 
                 ? evt.target.fullName.value
-                : null;
-            const email = evt.target.email.value;
-            const password = evt.target.password.value;
-            dispatch(auth(fullName, email, password, formName));
+                : null
+            const email = evt.target.email.value
+            const password = evt.target.password.value
+            dispatch(auth(fullName, email, password, formName))
         }
     }
 }
 
-export const Login = connect(mapLogin, mapDispatchAuth)(AuthForm);
-export const Signup = connect(mapSignup, mapDispatchAuth)(AuthForm);
+export const Login = connect(mapLogin, mapDispatchAuth)(AuthForm)
+export const Signup = connect(mapSignup, mapDispatchAuth)(AuthForm)

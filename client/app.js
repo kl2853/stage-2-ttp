@@ -1,6 +1,6 @@
-import React from "react";
-import Routes from "./routes";
-import { NavBar } from "./components";
+import React from "react"
+import Routes from "./routes"
+import { NavBar } from "./components"
 
 const App = () => {
     return(
@@ -11,4 +11,4 @@ const App = () => {
     )
 }
 
-export default App;
+export default App

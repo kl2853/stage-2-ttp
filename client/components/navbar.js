@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout, clearIex, clearTransaction } from "../store";
+import React from "react"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import { logout, clearIex, clearTransaction } from "../store"
 
 const NavBar = ({ handleClick, isLoggedIn }) => (
     <div id="header">
@@ -48,11 +48,11 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         handleClick() {
-            dispatch(logout());
-            dispatch(clearIex());
-            dispatch(clearTransaction());
+            dispatch(logout())
+            dispatch(clearIex())
+            dispatch(clearTransaction())
         }
     }
 }
 
-export default connect(mapState, mapDispatch)(NavBar);
+export default connect(mapState, mapDispatch)(NavBar)

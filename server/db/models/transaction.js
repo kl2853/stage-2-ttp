@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require("sequelize")
+const db = require("../db")
 
 const Transaction = db.define("transaction", {
     ticker: {
@@ -20,4 +20,4 @@ const Transaction = db.define("transaction", {
     }
 })
 
-module.exports = Transaction;
+module.exports = Transaction
