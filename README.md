@@ -5,6 +5,14 @@ _Deployed on Heroku at:_ [Stock Portfolio](https://kat-le-stock-portfolio.heroku
 
 **Back-end:** Server built with JavaScript runtime Node.js and Express, a Node.js framework, on the backend, querying a PostgreSQL database with Sequelize ORM.
 
+
+**How to run locally:**
+1. Install PostgreSQL and run `createdb stockportfolio` in bash.
+2. Run `npm install` in bash.
+3. Run `npm start` and the server should be running at `localhost:1008`.
+
+
+
 This stock portfolio app is designed and implemented for the following user stories:
 
 #### USER STORIES
