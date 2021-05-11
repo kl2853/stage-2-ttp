@@ -24,7 +24,7 @@
     "express-session": "^1.17.0",
     "helmet": "^3.21.3",
     "history": "^4.10.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "npm-force-resolutions": "0.0.3",
     "passport": "^0.4.1",
